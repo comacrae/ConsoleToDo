@@ -18,7 +18,7 @@ namespace ConsoleToDoProject.CLI
             return input;
         }
 
-        public string CheckNullInput(string? input)
+        private string CheckNullInput(string? input)
         {
             return input ?? string.Empty;
         }

@@ -1,0 +1,15 @@
+C:\Users\comac\source\repos\comacrae\ConsoleToDo\ConsoleToDoProject\ConsoleToDoProject\bin\Debug\net8.0\ConsoleToDoProject.exe
+C:\Users\comac\source\repos\comacrae\ConsoleToDo\ConsoleToDoProject\ConsoleToDoProject\bin\Debug\net8.0\ConsoleToDoProject.deps.json
+C:\Users\comac\source\repos\comacrae\ConsoleToDo\ConsoleToDoProject\ConsoleToDoProject\bin\Debug\net8.0\ConsoleToDoProject.runtimeconfig.json
+C:\Users\comac\source\repos\comacrae\ConsoleToDo\ConsoleToDoProject\ConsoleToDoProject\bin\Debug\net8.0\ConsoleToDoProject.dll
+C:\Users\comac\source\repos\comacrae\ConsoleToDo\ConsoleToDoProject\ConsoleToDoProject\bin\Debug\net8.0\ConsoleToDoProject.pdb
+C:\Users\comac\source\repos\comacrae\ConsoleToDo\ConsoleToDoProject\ConsoleToDoProject\obj\Debug\net8.0\ConsoleToDoProject.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\comac\source\repos\comacrae\ConsoleToDo\ConsoleToDoProject\ConsoleToDoProject\obj\Debug\net8.0\ConsoleToDoProject.AssemblyInfoInputs.cache
+C:\Users\comac\source\repos\comacrae\ConsoleToDo\ConsoleToDoProject\ConsoleToDoProject\obj\Debug\net8.0\ConsoleToDoProject.AssemblyInfo.cs
+C:\Users\comac\source\repos\comacrae\ConsoleToDo\ConsoleToDoProject\ConsoleToDoProject\obj\Debug\net8.0\ConsoleToDoProject.csproj.CoreCompileInputs.cache
+C:\Users\comac\source\repos\comacrae\ConsoleToDo\ConsoleToDoProject\ConsoleToDoProject\obj\Debug\net8.0\ConsoleToDoProject.sourcelink.json
+C:\Users\comac\source\repos\comacrae\ConsoleToDo\ConsoleToDoProject\ConsoleToDoProject\obj\Debug\net8.0\ConsoleToDoProject.dll
+C:\Users\comac\source\repos\comacrae\ConsoleToDo\ConsoleToDoProject\ConsoleToDoProject\obj\Debug\net8.0\refint\ConsoleToDoProject.dll
+C:\Users\comac\source\repos\comacrae\ConsoleToDo\ConsoleToDoProject\ConsoleToDoProject\obj\Debug\net8.0\ConsoleToDoProject.pdb
+C:\Users\comac\source\repos\comacrae\ConsoleToDo\ConsoleToDoProject\ConsoleToDoProject\obj\Debug\net8.0\ConsoleToDoProject.genruntimeconfig.cache
+C:\Users\comac\source\repos\comacrae\ConsoleToDo\ConsoleToDoProject\ConsoleToDoProject\obj\Debug\net8.0\ref\ConsoleToDoProject.dll
