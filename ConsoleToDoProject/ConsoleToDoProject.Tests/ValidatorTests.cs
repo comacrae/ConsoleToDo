@@ -37,4 +37,12 @@ public class ValidatorTests
         Assert.Equal(result,expected);
     }
 
+    [Fact]
+    public void IsValidInput_EmptyString_ReturnsFalse()
+    {
+        Validator validator = new Validator(); 
+        bool output = validator.IsValidInput("");
+        Assert.False(output);
+    }
+
 }

@@ -34,6 +34,11 @@ namespace ConsoleToDoProject.CLI
             return Regex.IsMatch(input, pattern);
         }
 
+        private bool IsEmptyString(string input)
+        {
+            return input.Length == 0;
+        }
+
         public bool IsValidInput(string? input)
         {
             if (IsNullString(input))
@@ -42,7 +47,7 @@ namespace ConsoleToDoProject.CLI
             }
             input = input ?? " "; // to satisfy compiler but probably bad practice
 
-            if (ContainsInvalidChars(input) || ContainsWhitespace(input))
+            if (ContainsInvalidChars(input) || ContainsWhitespace(input) || IsEmptyString(input))
             {
                 return false;
             }
