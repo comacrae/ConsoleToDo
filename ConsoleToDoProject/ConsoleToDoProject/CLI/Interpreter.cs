@@ -18,8 +18,8 @@ namespace ConsoleToDoProject.CLI
         public string? GetInput()
         {
             Console.WriteLine(">>>");
-            string input = Console.ReadLine();
-            if(!_validator.ContainsWhitespace(input) && !_validator.ContainsInvalidChars(input))
+            string? input = Console.ReadLine();
+            if(_validator.IsValidInput(input))
                 return input?.ToLower();
             else return null;
         }

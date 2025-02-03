@@ -14,40 +14,39 @@ namespace ConsoleToDoProject.CLI
 
         public Validator() { }
 
-        public bool IsNullString(string? input)
+        private bool IsNullString(string? input)
         {
             return input == null;
         }
 
-        public bool ContainsWhitespace(string? input)
+        private bool ContainsWhitespace(string input)
         {
-            if (IsNullString(input))
-            {
-                throw new ArgumentNullException($"Variable {nameof(input)} cannot be null.");
-            }
-            else
-            {
 
-                string pattern = @"\s+";
-
-                return Regex.IsMatch(input, pattern);
-            }
+            string pattern = @"\s+";
+            return Regex.IsMatch(input, pattern);
 
         }
 
-        public bool ContainsInvalidChars(string? input) { 
+        private bool ContainsInvalidChars(string input) {
 
+            string pattern = @"[^a-zA-Z_]+";
+
+            return Regex.IsMatch(input, pattern);
+        }
+
+        public bool IsValidInput(string? input)
+        {
             if (IsNullString(input))
             {
-                throw new ArgumentNullException($"Variable {nameof(input)} cannot be null.");
+                throw new ArgumentNullException($"{nameof(input)} cannot be null.");
             }
-            else
+            input = input ?? " "; // to satisfy compiler but probably bad practice
+
+            if (ContainsInvalidChars(input) || ContainsWhitespace(input))
             {
-
-                string pattern = @"[^a-zA-Z_]+";
-
-                return Regex.IsMatch(input, pattern);
+                return false;
             }
+            return true;
         }
 
     }

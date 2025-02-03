@@ -7,39 +7,34 @@ using System.Text.RegularExpressions;
 //MethodName_Condition_ExpectedResult
 public class ValidatorTests
 {
-    [Fact]
-    public void IsNullString_NullStringEntered_ReturnsTrue()
+    [Theory]
+    [InlineData(" ")]
+    [InlineData("")]
+    [InlineData("test")]
+    public void IsValidInput_NonNullStringEntered_DoesNotThrowException(string? input)
     {
         Validator validator = new Validator();
-        string? input = null;
-        bool output = validator.IsNullString(input);
-        Assert.True(output);
+        validator.IsValidInput(input);
+        Assert.True(true);
     }
 
-    [Fact] 
-    public void IsNullString_NonNullStringEntered_ReturnsFalse()
+    [Fact]
+    public void IsValidInput_NullStringEntered_ThrowsNulLArgumentException()
     {
         Validator validator = new Validator();
-        bool output = validator.IsNullString("test");
-        Assert.False(output);
+        Assert.Throws<ArgumentNullException>(() => validator.IsValidInput(null));
     }
 
     [Theory]
-    [InlineData("ab*(", true)]
-    [InlineData("ab c", true)]
-    [InlineData(" ",true)]
-    [InlineData("abc",false)]
-    public void ContainsInvalidChars_StringWithInvalidChars_ReturnsTrue(string input, bool expected)
+    [InlineData("ab*(", false)]
+    [InlineData("ab c", false)]
+    [InlineData(" ", false)]
+    [InlineData("abc",true)]
+    public void IsValidInput_StringWithInvalidChars_ReturnsTrue(string input, bool expected)
     {
         Validator validator = new Validator();
-        bool result = validator.ContainsInvalidChars(input);
+        bool result = validator.IsValidInput(input);
         Assert.Equal(result,expected);
     }
 
-    [Fact]
-    public void ContainsInvalidChars_NullEntered_ThrowsNullArgumentException()
-    {
-        Validator validator = new Validator();
-        Assert.Throws<ArgumentNullException>(() => validator.ContainsInvalidChars(null));
-    }
 }
