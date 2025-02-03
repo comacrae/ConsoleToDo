@@ -1,10 +1,16 @@
-﻿using System;
+﻿#nullable enable
+
 using System.Text.RegularExpressions;
 
 namespace ConsoleToDoProject.CLI
 {
     public class Validator
     {
+        /// <summary>
+        /// Validator class checks that an input string is a valid. An input string is considered valid if:
+        /// 1. It contains only letter characters or underscores
+        /// 2. It is not null
+        /// </summary>
 
         public Validator() { }
 
