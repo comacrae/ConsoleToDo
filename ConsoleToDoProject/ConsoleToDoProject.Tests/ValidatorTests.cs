@@ -10,7 +10,7 @@ public class ValidatorTests
     public void IsValidInput_NonNullStringEntered_DoesNotThrowException()
     {
         Validator validator = new Validator();
-        validator.IsValidInput("test");
+        validator.IsValidInput("-test");
         Assert.True(true);
     }
 
@@ -25,6 +25,7 @@ public class ValidatorTests
     [InlineData("ab*(")]
     [InlineData("ab c")]
     [InlineData(" ")]
+    [InlineData("")]
     public void IsValidInput_StringWithInvalidChars_ThrowsArgumentException(string input)
     {
         Validator validator = new Validator();

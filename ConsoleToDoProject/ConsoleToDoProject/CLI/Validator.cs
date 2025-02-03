@@ -22,7 +22,7 @@ namespace ConsoleToDoProject.CLI
 
         private bool ContainsInvalidChars(string input) {
 
-            string pattern = @"[^a-zA-Z_]+";
+            string pattern = @"[^a-zA-Z_\-]+";
 
             return Regex.IsMatch(input, pattern);
         }
