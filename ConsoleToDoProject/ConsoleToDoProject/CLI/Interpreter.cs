@@ -7,11 +7,11 @@ namespace ConsoleToDoProject.CLI
 {
     public class Interpreter
     {
-        private bool _isRunning { get; set; }
+        private bool _interactiveMode { get; set; }
         private Validator _validator;
         public Interpreter()
         {
-            _isRunning = false;
+            _interactiveMode = false;
             _validator = new Validator();
         }
 
@@ -19,9 +19,16 @@ namespace ConsoleToDoProject.CLI
         {
             Console.WriteLine(">>>");
             string? input = Console.ReadLine();
-            if(_validator.IsValidInput(input))
+            if (_validator.IsValidInput(input))
+            {
                 return input?.ToLower();
-            else return null;
+
+            }
+            else
+            {
+                Console.WriteLine($"Invalid input: ${input}");
+                return null;
+            };
         }
 
     }

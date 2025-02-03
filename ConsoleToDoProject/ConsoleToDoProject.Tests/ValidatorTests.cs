@@ -2,19 +2,15 @@
 
 using Xunit;
 using ConsoleToDoProject.CLI;
-using System.Text.RegularExpressions;
 
 //MethodName_Condition_ExpectedResult
 public class ValidatorTests
 {
-    [Theory]
-    [InlineData(" ")]
-    [InlineData("")]
-    [InlineData("test")]
-    public void IsValidInput_NonNullStringEntered_DoesNotThrowException(string? input)
+    [Fact]
+    public void IsValidInput_NonNullStringEntered_DoesNotThrowException()
     {
         Validator validator = new Validator();
-        validator.IsValidInput(input);
+        validator.IsValidInput("test");
         Assert.True(true);
     }
 
@@ -26,23 +22,13 @@ public class ValidatorTests
     }
 
     [Theory]
-    [InlineData("ab*(", false)]
-    [InlineData("ab c", false)]
-    [InlineData(" ", false)]
-    [InlineData("abc",true)]
-    public void IsValidInput_StringWithInvalidChars_ReturnsTrue(string input, bool expected)
+    [InlineData("ab*(")]
+    [InlineData("ab c")]
+    [InlineData(" ")]
+    public void IsValidInput_StringWithInvalidChars_ThrowsArgumentException(string input)
     {
         Validator validator = new Validator();
-        bool result = validator.IsValidInput(input);
-        Assert.Equal(result,expected);
-    }
-
-    [Fact]
-    public void IsValidInput_EmptyString_ReturnsFalse()
-    {
-        Validator validator = new Validator(); 
-        bool output = validator.IsValidInput("");
-        Assert.False(output);
+        Assert.Throws<ArgumentException>(() => validator.IsValidInput(input));
     }
 
 }

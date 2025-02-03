@@ -1,6 +1,7 @@
 ﻿#nullable enable
 
 using System.Text.RegularExpressions;
+using System.Diagnostics.CodeAnalysis;
 
 namespace ConsoleToDoProject.CLI
 {
@@ -14,17 +15,9 @@ namespace ConsoleToDoProject.CLI
 
         public Validator() { }
 
-        private bool IsNullString(string? input)
+        private bool IsNullString([NotNullWhen(false)] string? input)
         {
             return input == null;
-        }
-
-        private bool ContainsWhitespace(string input)
-        {
-
-            string pattern = @"\s+";
-            return Regex.IsMatch(input, pattern);
-
         }
 
         private bool ContainsInvalidChars(string input) {
@@ -43,13 +36,15 @@ namespace ConsoleToDoProject.CLI
         {
             if (IsNullString(input))
             {
-                throw new ArgumentNullException($"{nameof(input)} cannot be null.");
+                throw new ArgumentNullException($"{nameof(input)} is invalid: Value cannot be null.");
             }
-            input = input ?? " "; // to satisfy compiler but probably bad practice
 
-            if (ContainsInvalidChars(input) || ContainsWhitespace(input) || IsEmptyString(input))
+            if (ContainsInvalidChars(input) )
             {
-                return false;
+                throw new ArgumentException($"{nameof(input)} is invalid: Value can only contain a-z, A-Z, and _ chars");
+            }else if (IsEmptyString(input))
+            {
+                throw new ArgumentException($"{nameof(input)} is invalid: Value cannot be an empty string");
             }
             return true;
         }
