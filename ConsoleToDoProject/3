@@ -1,0 +1,22 @@
+using ConsoleToDoProject.Services;
+namespace ConsoleToDoProject.Tests
+{
+    public class ParserTests
+    {
+        [Fact]
+        public void Parse_EmptyArgs_ThrowsError()
+        {
+            Parser p  = new Parser();
+            ArgumentException exception = Assert.Throws<ArgumentException>(() => p.Parse([]));
+            Assert.Contains("No arguments recieved", exception.Message);
+        }
+
+        [Fact]
+        public void Parse_UnrecognizedCommand_ThrowsError()
+        {
+            Parser p = new Parser();
+            ArgumentException exception = Assert.Throws<ArgumentException>(() => p.Parse(["nonexistentCommand"]));
+            Assert.Contains("Command unrecognized", exception.Message);
+        }
+    }
+}

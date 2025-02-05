@@ -1,4 +1,4 @@
-﻿namespace ConsoleToDoProject.CLI
+﻿namespace ConsoleToDoProject.Services
 {
     public class Tokenizer
     {

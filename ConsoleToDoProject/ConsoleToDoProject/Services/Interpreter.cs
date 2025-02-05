@@ -3,16 +3,16 @@
 using System;
 using System.Text;
 
-namespace ConsoleToDoProject.CLI
+namespace ConsoleToDoProject.Services
 {
     public class Interpreter
     {
         private bool _interactiveMode { get; set; }
-        private Validator _validator;
+        private TokenValidator _validator;
         public Interpreter()
         {
             _interactiveMode = false;
-            _validator = new Validator();
+            _validator = new TokenValidator();
         }
 
         public string? GetInput()

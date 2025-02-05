@@ -3,17 +3,17 @@
 using System.Text.RegularExpressions;
 using System.Diagnostics.CodeAnalysis;
 
-namespace ConsoleToDoProject.CLI
+namespace ConsoleToDoProject.Services
 {
-    public class Validator
+    public class TokenValidator
     {
         /// <summary>
         /// Validator class checks that an input string is a valid. An input string is considered valid if:
-        /// 1. It contains only letter characters or underscores
+        /// 1. It contains only letter,characters, numbers, or underscores
         /// 2. It is not null
         /// </summary>
 
-        public Validator() { }
+        public TokenValidator() { }
 
         private bool IsNullString([NotNullWhen(false)] string? input)
         {
@@ -22,7 +22,7 @@ namespace ConsoleToDoProject.CLI
 
         private bool ContainsInvalidChars(string input) {
 
-            string pattern = @"[^a-zA-Z_\-]+";
+            string pattern = @"[^\w_\-]+";
 
             return Regex.IsMatch(input, pattern);
         }
@@ -41,7 +41,7 @@ namespace ConsoleToDoProject.CLI
 
             if (ContainsInvalidChars(input) )
             {
-                throw new ArgumentException($"{nameof(input)} is invalid: Value can only contain a-z, A-Z, and _ chars");
+                throw new ArgumentException($"{nameof(input)} is invalid: Value can only contain a-z, A-Z, and _ or - chars");
             }else if (IsEmptyString(input))
             {
                 throw new ArgumentException($"{nameof(input)} is invalid: Value cannot be an empty string");
