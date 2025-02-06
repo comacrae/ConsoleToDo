@@ -6,25 +6,43 @@ namespace ConsoleToDoProject.Models
 {
     public class Options
     {
-        public List<Option> supportedOptions { get; set; } = new List<Option>();
+        private List<Option> supportedOptions { get; set; } = new List<Option>();
+
+        public Options() { }
 
         public Options(List<Option> initOptionsList) { 
-            foreach (Option initCmd in initOptionsList)
+            foreach (Option initOpt in initOptionsList)
             {
-                if(supportedOptions.Find(cmd => cmd.Name == initCmd.Name) == null) // if the Option isn't already in the list
+                if(supportedOptions.Find(opt => opt.FullName != initOpt.FullName && opt.AbbreviatedName != initOpt.AbbreviatedName) == null) // if the Option isn't already in the list
                 {
-                    supportedOptions.Add(initCmd);
+                    supportedOptions.Add(initOpt);
                 }
                 else
                 {
-                    throw new TypeInitializationException("Option", new ArgumentException($"Cannot have duplicate Options in initOptionsList: {initCmd.Name}"));
+                    throw new TypeInitializationException("Option", new ArgumentException($"Cannot have duplicate Options in initOptionsList: {initOpt.FullName}"));
                 }
             }
 
         }
 
-        public Option? GetOption(string name){
-            return supportedOptions.Find(cmd => cmd.Name == name);
+        public Option? GetOptionByFullName(string name){
+            return supportedOptions.Find(cmd => cmd.FullName == name);
+        }
+        public Option? GetOptionByAbbreviatedName(string name){
+            return supportedOptions.Find(cmd => cmd.AbbreviatedName == name);
+        }
+
+        public List<string> GetSupportedOptionsByFullName()
+        {
+            List<string> output = new List<string>();
+            supportedOptions.ForEach(opt => output.Add($"{opt.FullName}"));
+            return output;
+        }
+        public List<string> GetSupportedOptionsByAbbreviatedName()
+        {
+            List<string> output = new List<string>();
+            supportedOptions.ForEach(opt => output.Add($"{opt.AbbreviatedName}"));
+            return output;
         }
     }
 }

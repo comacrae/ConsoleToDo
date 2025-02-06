@@ -3,42 +3,65 @@ using System.Collections.Generic;
 
 public class Option
 {
-    public string Name { get;}
+    public string FullName { get;}
+    public string AbbreviatedName { get; } = null;
     public string Description { get;}
     public string? DefaultValue { get;}
-    public string? Value { set; get; }
     public bool IsRequired { get;}
     public bool IsFlag {  get;}
-    public bool AllowMultiple { get;}
 
-    public Option(string name, string description, string? defaultValue=null, bool isRequired=false, bool isFlag=false, bool allowMultiple = false)
+    public bool FlagActive { get; set; }
+    public string? Value { get; set; } = null;
+
+    public Option(string abbreviatedName,string fullName, string description, string? defaultValue=null, bool isRequired=false, bool isFlag=false)
     {
-        Name = name?? throw new ArgumentNullException("Name cannot be null");;
+        AbbreviatedName = abbreviatedName?? throw new ArgumentNullException("Abbreivated Name cannot be null");;
+        FullName = fullName?? throw new ArgumentNullException("Full Name cannot be null");;
         Description = description?? throw new ArgumentNullException("Description cannot be null");
-        DefaultValue = defaultValue;
+        if(isRequired )
+        {
+            if(defaultValue != null)
+                throw new TypeInitializationException("Option", new ArgumentException("defaultValue must be null if option isRequired"));
+            else if (IsFlag)
+            {
+                throw new TypeInitializationException("Option", new ArgumentException("An option that is a flag cannot also be required"));
+            }
+        }else if(!isRequired && defaultValue == null)
+        {
+            throw new TypeInitializationException("Option", new ArgumentNullException("defaultValue cannot be null if option is not required"));
+        }else // not required and default value is set to something
+        {
+            DefaultValue = defaultValue;
+            Value = defaultValue;
+        }
         IsRequired = isRequired;
         IsFlag = isFlag;
-        AllowMultiple = allowMultiple;
-        
-
-        if (IsFlag && AllowMultiple)
-            throw new ArgumentException($"{nameof(IsFlag)} and {nameof(AllowMultiple)} cannot both be true in Options constructor");
+        if (isFlag) 
+        { 
+            if(DefaultValue != "true" && DefaultValue != "false")
+                throw new TypeInitializationException("Option", new ArgumentNullException("A Flag Option must have a default value equal to 'true' or 'false'"));
+            FlagActive = DefaultValue == "true";
+        }
     }
 
     public void SetValue(string? value)
     {
         if (IsFlag)
         {
-            throw new ArgumentException("No input value allowed; Option is a flag"); 
+            throw new ArgumentException("Option is a flag; Must be set using FlagActive setter");
         }
+
         if(value == null)
         {
-            Value = DefaultValue ?? throw new ArgumentNullException("Default Value is null; Input required");
+            if (DefaultValue == null)
+            {
+                throw new ArgumentNullException("Value is required and cannot be null");
+            }
+
+            value = DefaultValue;
         }
-        else
-        {
-            Value= value;
-        }
+
+        Value = value;
     }
 
 

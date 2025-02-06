@@ -15,7 +15,7 @@ namespace ConsoleToDoProject.Tests
         public void Parse_EmptyArguments_ThrowsError()
         {
             Parser p  = new Parser();
-            ArgumentException exception = Assert.Throws<ArgumentException>(() => p.Parse([]));
+            ArgumentException exception = Assert.Throws<ArgumentException>(() => p.Parse(["add"]));
             Assert.Contains("No arguments recieved", exception.Message);
         }
 

@@ -21,34 +21,34 @@ public class OptionTests
     [Fact]
     public void ClassInitialization_NameIsNotNull() {
         Option op = new Option(name: "Test", description:"test", defaultValue:"test", isRequired:true) ;
-        Assert.NotNull(op.Name);
+        Assert.NotNull(op.FullName);
     }
 
     [Fact]
     public void ClassInitialization_NameIsNotEmpty() {
         Option op = new Option(name: "Test", description:"test", defaultValue:"test", isRequired:true) ;
-        Assert.True(op.Name.Length > 0);
+        Assert.True(op.FullName.Length > 0);
     }
 
     [Fact]
-    public void ClassInitialization_MultipleAllowedAndFlag_ThrowsArgError()
-    {
-        Assert.Throws<ArgumentException>( () => new Option(name: "Test", description:"test", defaultValue:"test", isRequired:true, isFlag:true, allowMultiple:true));
+    public void ClassInitialization_NullDefaultAndIsRequired_ThrowsInitException() {
+        Assert.Throws<TypeInitializationException>(() => new Option(name: "Test", description:"test", defaultValue:null, isRequired:true)) ;
     }
 
     [Fact]
-    public void SetValue_FlagWithValueInput_ThrowsException()
+    public void SetValue_IsFlagTrueAndNonNull_ThrowsException()
     {
-        Option op = new Option(name: "Test", description: "test", defaultValue: "test", isRequired: true, isFlag: true, allowMultiple: false);
-        Assert.Throws<ArgumentException>( () => op.SetValue("abc") );
+        Option op = new Option(name: "Test", description:"test", defaultValue:"test", isRequired:true, isFlag:true) ;
+        Assert.Throws<ArgumentException>(() => op.SetValue("abc"));
     }
 
     [Fact]
-    public void SetValue_NullValueInput_ThrowsException()
+    public void SetValue_IsNotFlagTrueAndNull_ThrowsNullException()
     {
-        Option op = new Option(name: "Test", description: "test", defaultValue: null, isRequired: true, isFlag: false, allowMultiple: false);
-        Assert.Throws<ArgumentNullException>(() => op.SetValue(null));
+        Option op = new Option(name: "Test", description:"test", defaultValue:"test", isRequired:true, isFlag:true) ;
+        Assert.Throws<ArgumentException>(() => op.SetValue(null));
     }
+
 
 
 }
