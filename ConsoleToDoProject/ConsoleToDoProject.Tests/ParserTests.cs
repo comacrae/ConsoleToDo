@@ -1,5 +1,6 @@
 ﻿using ConsoleToDoProject.Services;
 using ConsoleToDoProject.Models;
+using System.Security.Cryptography;
 namespace ConsoleToDoProject.Tests
 {
     public class ParserTests
@@ -49,8 +50,7 @@ namespace ConsoleToDoProject.Tests
             List<Option> initOptionsList = new List<Option>() { o };
             Options options = new Options(initOptionsList);
             Command c = new Command(name:"add", options:options);
-            List<Command> commandList = new List<Command>() {c};
-            Commands commands = new Commands(initCommandsList:commandList);
+            List<Command> commandList = new List<Command>() {c}; Commands commands = new Commands(initCommandsList:commandList);
             Parser p  = new Parser(initCommands:commands);
             Command output = p.Parse(["add", "Item One", "-f"]);
             Assert.Equal("add", c.Name);
@@ -61,7 +61,30 @@ namespace ConsoleToDoProject.Tests
         [Fact]
         public void Parse_NoArgCommandGivenArgs_ThrowsError()
         {
+            Option o = new Option(fullName:"flag", abbreviatedName:"f", description:"test", isFlag:true, defaultValue:"true");
+            List<Option> initOptionsList = new List<Option>() { o };
+            Options options = new Options(initOptionsList);
+            Command c = new Command(name:"noArgCmd", options:options, noArgs:true);
+            List<Command> commandList = new List<Command>() {c};
+            Commands commands = new Commands(initCommandsList:commandList);
+            Parser p  = new Parser(initCommands:commands);
+            Assert.Throws<Exception>(() =>p.Parse(["noArgCmd","Item One"]));
 
+        }
+
+        [Fact]
+        public void Parse_FlagOrder_DoesNotAffectOutput()
+        {
+            Option o = new Option(fullName:"flag", abbreviatedName:"f", description:"test", isFlag:true, defaultValue:"true");
+            List<Option> initOptionsList = new List<Option>() { o };
+            Options options = new Options(initOptionsList);
+            Command c = new Command(name:"add", options:options, noArgs:false);
+            List<Command> commandList = new List<Command>() {c};
+            Commands commands = new Commands(initCommandsList:commandList);
+            Parser p  = new Parser(initCommands:commands);
+            Command cmd1 = p.Parse(["add", "-f", "Item One", "Item Two"]);
+            Command cmd2 = p.Parse(["add", "Item One", "Item Two", "-f"]);
+            Assert.Equal(cmd1.Arguments,cmd2.Arguments);
         }
     }
 }

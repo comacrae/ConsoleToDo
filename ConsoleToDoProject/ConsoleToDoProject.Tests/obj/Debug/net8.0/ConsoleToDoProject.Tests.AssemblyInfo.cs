@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ConsoleToDoProject.Tests")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+adcf79041666eea0b86fdc806e491483ad894674")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+29070a00391852d1f7111013132f6aaf285158b6")]
 [assembly: System.Reflection.AssemblyProductAttribute("ConsoleToDoProject.Tests")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ConsoleToDoProject.Tests")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

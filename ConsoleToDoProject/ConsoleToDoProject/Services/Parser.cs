@@ -26,7 +26,7 @@ namespace ConsoleToDoProject.Services
 
             string commandName = input[0];
 
-            Command cmd = Commands.GetCommand(commandName) ?? throw new Exception("Invalid command");
+            Command cmd = Commands.GetCommand(commandName) ?? throw new Exception($"Invalid command: {commandName}");
              
             for(int i = 1; i< input.Length; i++)
             {
@@ -49,7 +49,7 @@ namespace ConsoleToDoProject.Services
                     {
                         if (optionsEvoked.Contains(token))
                         {
-                            throw new Exception("Cannot repeat an option");
+                            throw new Exception($"Cannot repeat option: {token}");
                         }
 
                         Option opt = cmd.Options.GetOption(token, isAbbreviated);
@@ -60,7 +60,7 @@ namespace ConsoleToDoProject.Services
                         {
                             if (i == input.Length - 1 && opt.IsRequired)
                             {
-                                throw new Exception("No value provided for a required option");
+                                throw new Exception($"No value provided for required option: {opt.FullName}");
                             }
                             else
                             {
@@ -78,10 +78,18 @@ namespace ConsoleToDoProject.Services
                 }
             }
 
-            if (!cmd.NoArgs && arguments.Count == 0)
-                throw new Exception("No arguments provided");
+            if (cmd.NoArgs)
+            {
+                if (arguments.Count > 0)
+                    throw new Exception($"No arguments allowed for command: {cmd.Name}");
+            }
             else
-                cmd.Arguments = arguments;
+            {
+                if (arguments.Count == 0)
+                    throw new Exception($"No arguments provided for command: {cmd.Name}");
+                else
+                    cmd.Arguments = arguments;
+            }
 
             return cmd;
         }
