@@ -10,26 +10,90 @@ namespace ConsoleToDoProject.Models
 
         public Options() { }
 
-        public Options(List<Option> initOptionsList) { 
+        public Options(List<Option> initOptionsList)
+        {
             foreach (Option initOpt in initOptionsList)
             {
-                if(supportedOptions.Find(opt => opt.FullName != initOpt.FullName && opt.AbbreviatedName != initOpt.AbbreviatedName) == null) // if the Option isn't already in the list
+                if (supportedOptions.Find(opt => opt.FullName == initOpt.FullName && opt.AbbreviatedName == initOpt.AbbreviatedName) != null) // if the Option is already in the list
                 {
-                    supportedOptions.Add(initOpt);
+                    throw new TypeInitializationException("Option", new ArgumentException($"Cannot have duplicate Options in initOptionsList: {initOpt.FullName}"));
                 }
                 else
                 {
-                    throw new TypeInitializationException("Option", new ArgumentException($"Cannot have duplicate Options in initOptionsList: {initOpt.FullName}"));
+                    supportedOptions.Add(initOpt);
                 }
             }
 
         }
 
-        public Option? GetOptionByFullName(string name){
+        private Option? GetOptionByFullName(string name)
+        {
             return supportedOptions.Find(cmd => cmd.FullName == name);
         }
-        public Option? GetOptionByAbbreviatedName(string name){
+        private Option? GetOptionByAbbreviatedName(string name)
+        {
             return supportedOptions.Find(cmd => cmd.AbbreviatedName == name);
+        }
+
+        public Option GetOption(string name, bool abbreviated = false)
+        {
+            Option? opt = null;
+            if (abbreviated)
+            {
+                opt = GetOptionByAbbreviatedName(name);
+            }
+            else
+            {
+                opt = GetOptionByFullName(name);
+            }
+
+            if (opt == null)
+            {
+                throw new ArgumentException("Option does not exist: ", name);
+            }
+            else
+            {
+                return opt;
+            }
+        }
+
+        private int GetOptionIndexByAbbreviatedName(string name)
+        {
+            return supportedOptions.FindIndex(opt => opt.AbbreviatedName == name);
+        }
+        private int GetOptionIndexByFullName(string name)
+        {
+            return supportedOptions.FindIndex(opt => opt.FullName == name);
+        }
+
+        private int GetOptionIndex(string name, bool abbreviated = false)
+        {
+
+            if (abbreviated)
+            {
+                return GetOptionIndexByAbbreviatedName(name);
+            }
+            else
+            {
+                return GetOptionIndexByFullName(name);
+            }
+        }
+
+        public void UpdateOption(string name, string value, bool abbreviated)
+        {
+            int index = GetOptionIndex(name, abbreviated);
+            if (index == -1)
+            {
+                throw new Exception($"Option does not exist in supportedOptions: {name}");
+            }
+            supportedOptions[index].SetValue(value);
+            return;
+        }
+
+        public bool OptionExists(string name, bool abbreviated = false)
+        {
+            return GetOption(name, abbreviated) != null;
+
         }
 
         public List<string> GetSupportedOptionsByFullName()

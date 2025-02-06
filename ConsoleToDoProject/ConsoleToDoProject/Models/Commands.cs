@@ -8,6 +8,10 @@ namespace ConsoleToDoProject.Models
     {
         public List<Command> supportedCommands { get; set; } = new List<Command>();
 
+        public Commands() { 
+            supportedCommands= new List<Command>();
+                }   
+
         public Commands(List<Command> initCommandsList) { 
             foreach (Command initCmd in initCommandsList)
             {

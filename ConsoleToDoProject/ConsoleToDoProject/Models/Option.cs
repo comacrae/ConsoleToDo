@@ -15,8 +15,8 @@ public class Option
 
     public Option(string abbreviatedName,string fullName, string description, string? defaultValue=null, bool isRequired=false, bool isFlag=false)
     {
-        AbbreviatedName = abbreviatedName?? throw new ArgumentNullException("Abbreivated Name cannot be null");;
-        FullName = fullName?? throw new ArgumentNullException("Full Name cannot be null");;
+        AbbreviatedName = abbreviatedName.ToLower()?? throw new ArgumentNullException("Abbreivated Name cannot be null");;
+        FullName = fullName.ToLower()?? throw new ArgumentNullException("Full Name cannot be null");;
         Description = description?? throw new ArgumentNullException("Description cannot be null");
         if(isRequired )
         {

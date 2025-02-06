@@ -8,15 +8,18 @@ namespace ConsoleToDoProject.Services
 {
     public class Parser
     {
-        Commands Commands { get; set; }
+        Commands Commands { get; set; } = new Commands();
 
-        public Parser(Commands initCommandsList) { 
-            Commands = initCommandsList;
+        public Parser() { 
+            Commands = new Commands();
+        }
+        public Parser(Commands initCommands) { 
+            Commands = initCommands;
         }
         public Command Parse(string[] input)
         {
-            Command parsedCommand = new Command();
-            List<string> optionsEvoked = new List<string>();
+            HashSet<string> optionsEvoked = new HashSet<string>();
+            List<string> arguments = new List<string>();
 
             if (input.Length == 0)
                 throw new ArgumentException("No commands recieved");
@@ -25,45 +28,62 @@ namespace ConsoleToDoProject.Services
 
             Command cmd = Commands.GetCommand(commandName) ?? throw new Exception("Invalid command");
              
-            for(int i = 0; i< input.Length; i++)
+            for(int i = 1; i< input.Length; i++)
             {
                 string token = input[i];
-                Option? opt = null;
+
+                if (String.IsNullOrEmpty(token))
+                {
+                    throw new Exception("Empty or null string as token");
+                }
+
+
                 if (isOption(token))
                 {
-                    token = Regex.Replace(token, "-", "");
-                    if (optionsEvoked.Contains(token))
-                    {
-                        throw new Exception("Cannot repeat an option");
-                    }
 
-                    if(isAbbreviatedOption(token))
-                        opt = cmd.Options.GetOptionByAbbreviatedName(token);
-                    else
-                        opt = cmd.Options.GetOptionByFullName(token);
+                    bool isAbbreviated = isAbbreviatedOption(token);
+                    token = Regex.Replace(token, "-", "").ToLower(); // trim dashes before searching for option
 
-                    if(opt == null)
-                    {
-                        throw new Exception("Invalid option");
-                    }
 
-                    if(opt.IsFlag)
-                        opt.FlagActive = true;
-                    else
+                    if (cmd.Options.OptionExists(token, isAbbreviated))
                     {
-                        if(i == input.Length - 1 && opt.IsRequired)
+                        if (optionsEvoked.Contains(token))
                         {
-                            throw new Exception("No value provided for a required option");
+                            throw new Exception("Cannot repeat an option");
+                        }
+
+                        Option opt = cmd.Options.GetOption(token, isAbbreviated);
+
+                        if (opt.IsFlag)
+                            opt.FlagActive = true;
+                        else
+                        {
+                            if (i == input.Length - 1 && opt.IsRequired)
+                            {
+                                throw new Exception("No value provided for a required option");
+                            }
+                            else
+                            {
+                                string value = input[i + 1];
+                                cmd.Options.UpdateOption(token, value, isAbbreviated);
+                                i++;
+                            }
                         }
                     }
                      
                 }
-                else
+                else 
                 {
-                    parsedCommand.Arguments.Add(token);
+                    arguments.Add(token);
                 }
             }
-            return parsedCommand;
+
+            if (!cmd.NoArgs && arguments.Count == 0)
+                throw new Exception("No arguments provided");
+            else
+                cmd.Arguments = arguments;
+
+            return cmd;
         }
 
         private bool isOption(string token)
