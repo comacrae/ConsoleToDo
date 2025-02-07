@@ -26,4 +26,8 @@
     <ProjectReference Include="..\ConsoleToDoProject\ConsoleToDoProject.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="TestFolder\" />
+  </ItemGroup>
+
 </Project>

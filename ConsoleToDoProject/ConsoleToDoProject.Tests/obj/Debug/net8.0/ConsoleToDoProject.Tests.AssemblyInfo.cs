@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ConsoleToDoProject.Tests")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8890f45abcf36f2e31e84df46dc3a06e6a3fc2dc")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1366cd46bb47d576352e602a884a63ea3446aa50")]
 [assembly: System.Reflection.AssemblyProductAttribute("ConsoleToDoProject.Tests")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ConsoleToDoProject.Tests")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
