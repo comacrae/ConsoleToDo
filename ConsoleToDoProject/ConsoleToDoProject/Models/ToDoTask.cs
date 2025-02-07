@@ -22,12 +22,22 @@ namespace ConsoleToDoProject.Models
 
         public ToDoTask(string description, PriorityLevel priority= PriorityLevel.Low)
         {
-            Description = description?? throw new TypeInitializationException("ToDoTask", new ArgumentNullException("ToDoTask description string cannot be null"));
+            if (String.IsNullOrEmpty(description))
+            {
+                throw new TypeInitializationException("ToDoTask", new ArgumentNullException("ToDoTask description string cannot be null"));
+            }
+            Description = description;
             Priority = priority;
         }
-        public string GetDescription()
+
+        public void SetDescription(string description)
         {
-            return Description;
+            if(String.IsNullOrEmpty(description))
+            {
+                throw new ArgumentNullException("Description cannot be empty or null");
+            }
+
+            Description = description;
         }
 
         public void SetComplete()
