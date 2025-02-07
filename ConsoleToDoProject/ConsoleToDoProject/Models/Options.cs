@@ -25,6 +25,10 @@ namespace ConsoleToDoProject.Models
             }
 
         }
+        public IEnumerator<Option> GetEnumerator()
+        {
+            return supportedOptions.GetEnumerator();
+        }
 
         private Option? GetOptionByFullName(string name)
         {

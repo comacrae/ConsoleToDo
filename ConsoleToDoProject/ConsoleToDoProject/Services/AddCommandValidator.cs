@@ -3,18 +3,14 @@ using ConsoleToDoProject.Models;
 
 namespace ConsoleToDoProject.Services
 {
-    public class AddCommandValidator:ICommandValidator
+    public class AddCommandValidator: ICommandValidator
     {
-        public bool CanValidate(string command)
+        public bool IsValid(Command cmd, out string errorMessage)
         {
-            return command == "add";
+            errorMessage = String.Empty;
+            return false; 
         }
-        public bool Validate(Command command, out string errorMessage)
-        {
-            errorMessage = string.Empty;
 
-            return true;
-        }
 
     }
 }

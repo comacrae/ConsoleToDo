@@ -1,6 +1,6 @@
 # TODO 
 ## Inspired by this [roadmap.sh Projects](https://roadmap.sh/projects/task-tracker)
-- [] Read Input
+- [] Read Input And Create 
 - [] Save Output To JSON
 		- [] Designate save file location
 - [] Add, Update, and Delete tasks
@@ -16,5 +16,4 @@
 - [] Usage Streak
 - [] Subtasks
 - [] XP?
-- [] AI suggestions for new subtasks?
 - [] Tags
