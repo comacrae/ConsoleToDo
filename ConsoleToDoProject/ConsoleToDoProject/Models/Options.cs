@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace ConsoleToDoProject.Models
 {
-    public class Options
+    public class Options: IEnumerable<Option>
     {
         private List<Option> supportedOptions { get; set; } = new List<Option>();
 
@@ -25,9 +26,9 @@ namespace ConsoleToDoProject.Models
             }
 
         }
-        public IEnumerator<Option> GetEnumerator()
-        {
-            return supportedOptions.GetEnumerator();
+
+        public void Add(Option op){
+            supportedOptions.Add(op);
         }
 
         private Option? GetOptionByFullName(string name)
@@ -111,6 +112,15 @@ namespace ConsoleToDoProject.Models
             List<string> output = new List<string>();
             supportedOptions.ForEach(opt => output.Add($"{opt.AbbreviatedName}"));
             return output;
+        }
+
+        public IEnumerator<Option> GetEnumerator()
+        {
+            return supportedOptions.GetEnumerator();
+        }
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return ((IEnumerable)supportedOptions).GetEnumerator();
         }
     }
 }

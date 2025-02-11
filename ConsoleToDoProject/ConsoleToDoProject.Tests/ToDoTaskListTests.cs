@@ -153,5 +153,31 @@ namespace ConsoleToDoProject.Tests
             Assert.Throws<InvalidOperationException>(() =>tasklist.DeleteTaskByDescription("abc"));
             Assert.Throws<InvalidOperationException>(() =>tasklist.DeleteTaskByIndex(0));
         }
+
+        [Fact]
+        public void DeleteTaskByPriority_EmptyTaskList_ThrowsError()
+        {
+            ToDoTaskList tasklist = new ToDoTaskList() { };
+            Assert.Throws<InvalidOperationException>(() =>tasklist.DeleteTaskByPriority(ToDoTask.PriorityLevel.Low));
+        }
+
+        [Fact]
+        public void DeleteTaskByPriority_NoMatching_DoesntChangeList()
+        {
+            ToDoTaskList tasklist = new ToDoTaskList();
+            tasklist.AddTask(new ToDoTask("a", ToDoTask.PriorityLevel.Medium));
+            tasklist.DeleteTaskByPriority(ToDoTask.PriorityLevel.Low);
+            Assert.True(tasklist.Tasks.Any());
+        }
+
+        [Fact]
+        public void DeleteTaskByPriority_Matching_UpdatesList()
+        {
+            ToDoTaskList tasklist = new ToDoTaskList();
+            tasklist.AddTask(new ToDoTask("a", ToDoTask.PriorityLevel.Medium));
+            tasklist.AddTask(new ToDoTask("b", ToDoTask.PriorityLevel.Medium));
+            tasklist.DeleteTaskByPriority(ToDoTask.PriorityLevel.Medium);
+            Assert.False(tasklist.Tasks.Any());
+        }
     }
 }

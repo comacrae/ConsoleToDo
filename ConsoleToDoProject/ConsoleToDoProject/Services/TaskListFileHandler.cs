@@ -38,6 +38,15 @@ namespace ConsoleToDoProject.Services
             File.WriteAllText(path, fileContents);
         }
 
+        public string GetCurrentFilePath()
+        {
+            if(Filepath == null)
+            {
+                throw new FileLoadException("No file has been loaded or no default file has been designated in your .tasklic config file");
+            }
+            return Filepath;
+        }
+
         public ToDoTaskList LoadFile(string filePath)
         {
             ToDoTaskList returnList = new ToDoTaskList();
@@ -69,7 +78,7 @@ namespace ConsoleToDoProject.Services
             if (IsValidPath(filePath)) {
                 if(!overwrite && File.Exists(filePath))
                 {
-                    throw new Exception($"A file already exists at path {filePath}");
+                    throw new ArgumentException($"A file already exists at path {filePath}");
                 }
 
                 string? serializedList = null;

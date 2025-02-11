@@ -16,6 +16,7 @@ namespace ConsoleToDoProject.Models
         public bool IsComplete { get; set; } = false;
         public DateTime CreationDatetime {  get; set; } = DateTime.Now;
         public DateTime? CompletedDatetime { get; set; } = null;
+        public DateTime? DueDate { get; set; } = null;
         
 
         public PriorityLevel Priority { get; set; }
@@ -49,6 +50,24 @@ namespace ConsoleToDoProject.Models
         {
             IsComplete = false;
             CompletedDatetime = null;
+        }
+
+        public override bool Equals(object? obj)
+        {
+            if (obj == null || obj.GetType() != GetType()) {
+                return false;
+            }
+
+            ToDoTask other = (ToDoTask) obj;
+            return Description == other.Description &&
+                Priority == other.Priority &&
+                IsComplete == other.IsComplete &&
+                CreationDatetime == other.CreationDatetime;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Description, Priority, IsComplete, CreationDatetime, CompletedDatetime);
         }
 
 

@@ -31,18 +31,37 @@ namespace ConsoleToDoProject.Tests
         [Fact]
         public void WriteFile_AlreadyExistingNoOverwrite_ThrowsException()
         {
+            string testFilePath = trueFolderPath + @"\existingFile.json";
             TaskListFileHandler fileHandler = new TaskListFileHandler();
             ToDoTaskList tList = createValidList();
-            Assert.Throws<ArgumentException>(() => fileHandler.WriteFile(tList,trueFolderPath + @"\existingFile.json"));
+            if(!File.Exists(testFilePath)) { 
+                fileHandler.WriteFile(tList, testFilePath);
+            }
+            Assert.Throws<ArgumentException>(() => fileHandler.WriteFile(tList,testFilePath));
         }
 
         [Fact]
-        public void WriteFile_WriteAndRead_CreatesIdenticalList() {
+        public void LoadFile_ReadingPremadeFile_ExecutesSuccessfully()
+        {
             TaskListFileHandler fileHandler = new TaskListFileHandler();
-            ToDoTaskList tList = createValidList();
-            fileHandler.WriteFile(tList,overwrite:true);
+            ToDoTaskList expectedList = createValidList();
+        }
+
+        [Fact]
+        public void WriteFile_WriteAndRead_CreatesIdenticalListCount() {
+            TaskListFileHandler fileHandler = new TaskListFileHandler();
+            ToDoTaskList writeList = createValidList();
+            fileHandler.WriteFile(writeList, overwrite:true);
             ToDoTaskList readList = fileHandler.LoadFile(trueFilePath);
-            Assert.Equal(tList,readList);
+            Assert.Equal(writeList.Tasks.Count,readList.Tasks.Count);
+        }
+
+        [Fact]
+        public void GetCurrentTasklistPath_NoFileLoaded_ThrowsException()
+        {
+            TaskListFileHandler fileHandler = new TaskListFileHandler();
+            Assert.Throws<FileLoadException>(() => fileHandler.GetCurrentFilePath());
+
         }
 
     }

@@ -1,9 +1,10 @@
 ﻿using ConsoleToDoProject.Models;
+using System.ComponentModel;
 namespace ConsoleToDoProject.Models
 {
     public class ToDoTaskList
     {
-        List<ToDoTask> Tasks { get; set; } = new List<ToDoTask>();
+        public List<ToDoTask> Tasks { get; set; } = new List<ToDoTask>();
 
         public ToDoTaskList()
         {
@@ -95,6 +96,68 @@ namespace ConsoleToDoProject.Models
                 throw new InvalidOperationException("Tasks list is empty.");
             ToDoTask taskToRemove = GetTaskByIndex(index);
             Tasks.Remove(taskToRemove);
+        }
+        public void DeleteTaskByPriority(ToDoTask.PriorityLevel priority)
+        {
+            if (Tasks.Count == 0)
+                throw new InvalidOperationException("Tasks list is empty.");
+            else if (Tasks.FindAll(t => t.Priority == priority) == null)
+            {
+                throw new InvalidOperationException($"Tasks list has no tasks with priority {(int)priority}.");
+            }
+            else
+            {
+                Tasks.RemoveAll(t => t.Priority == priority);
+            }
+        }
+
+        public void DeleteAllTasks()
+        {
+            if (Tasks.Count == 0)
+                throw new InvalidOperationException("Tasks list is empty.");
+            Tasks.Clear();
+        }
+
+        public void DeleteAllCompletedTasks()
+        {
+            if (Tasks.Count == 0)
+                throw new InvalidOperationException("Tasks list is empty.");
+            Tasks.RemoveAll(t => t.IsComplete);
+        }
+
+        public void MarkCompleteByDescription(string description)
+        {
+            int taskIdx = GetTaskIndex(description);
+            if( taskIdx == -1)
+            {
+                throw new ArgumentException($"Task does not exist: {description}");
+            }
+            Tasks[taskIdx].SetComplete();
+        }
+        public void MarkUncompleteByDescription(string description)
+        {
+            int taskIdx = GetTaskIndex(description);
+            if( taskIdx == -1)
+            {
+                throw new ArgumentException($"Task does not exist: {description}");
+            }
+            Tasks[taskIdx].SetUncomplete();
+        }
+        public void MarkCompleteByIndex(int idx)
+        {
+            if( idx < 0 || idx > Tasks.Count - 1)
+            {
+                throw new ArgumentException($"Task index does not exist: {idx}");
+            }
+            Tasks[idx].SetComplete();
+        }
+        public void MarkUncompleteByIndex(int idx)
+        {
+            if( idx < 0 || idx > Tasks.Count - 1)
+            {
+                throw new ArgumentException($"Task index does not exist: {idx}");
+            }
+            Tasks[idx].SetComplete();
         }
     }
 }
