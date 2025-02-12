@@ -32,7 +32,67 @@ namespace ConsoleToDoProject.Tests
             RemoveCommandExecutor executor = new RemoveCommandExecutor();
             ToDoTaskList taskList = GetPopulatedList();
             Exception m = Assert.Throws<InvalidOperationException>(()=>executor.Execute(cmd,taskList));
-            Assert.Contains("Tasks list has no task with priority", m.Message);
+            Assert.Contains("Tasks list has no tasks with priority", m.Message);
+        }
+        [Fact]
+        public void Execute_RemoveAllOption_ClearsList()
+        {
+            Command cmd = _commandDefinitions.RemoveCommand();
+            cmd.Options.SetFlagOption("a",true,true);
+            RemoveCommandExecutor executor = new RemoveCommandExecutor();
+            ToDoTaskList taskList = GetPopulatedList();
+            taskList = executor.Execute(cmd,taskList);
+            Assert.True(taskList.Tasks.Count == 0);
+
+        }
+
+        [Fact]
+        public void Execute_RemovePriorityOption_ClearsPriority()
+        {
+            Command cmd = _commandDefinitions.RemoveCommand();
+            cmd.Options.UpdateOption("p","2",true);
+            RemoveCommandExecutor executor = new RemoveCommandExecutor();
+            ToDoTaskList taskList = GetPopulatedList();
+            taskList = executor.Execute(cmd,taskList);
+            Assert.Null(taskList.Tasks.Find(t => t.Description == "task 2"));
+            Assert.Null(taskList.Tasks.Find(t => t.Description == "task 3"));
+            Assert.True(taskList.Tasks.Count == 1);
+        }
+
+        [Fact]
+        public void Execute_RemoveDescriptionOption_ClearsAppropriateTask()
+        {
+            Command cmd = _commandDefinitions.RemoveCommand();
+            cmd.Options.UpdateOption("d","task 2",true);
+            RemoveCommandExecutor executor = new RemoveCommandExecutor();
+            ToDoTaskList taskList = GetPopulatedList();
+            taskList = executor.Execute(cmd,taskList);
+            Assert.Null(taskList.Tasks.Find(t => t.Description == "task 2"));
+            Assert.True(taskList.Tasks.Count == 2);
+        }
+
+        [Fact]
+        public void Execute_RemoveCompletedOption_ClearsAppropriateTask()
+        {
+            Command cmd = _commandDefinitions.RemoveCommand();
+            cmd.Options.SetFlagOption("c",true,true);
+            RemoveCommandExecutor executor = new RemoveCommandExecutor();
+            ToDoTaskList taskList = GetPopulatedList();
+            taskList = executor.Execute(cmd,taskList);
+            Assert.Null(taskList.Tasks.Find(t => t.Description == "task 3"));
+            Assert.True(taskList.Tasks.Count == 2);
+        }
+
+        [Fact]
+        public void Execute_RemoveMultipleOptions_ThrowsError()
+        {
+            Command cmd = _commandDefinitions.RemoveCommand();
+            cmd.Options.SetFlagOption("c",true,true);
+            cmd.Options.SetFlagOption("a",true,true);
+            RemoveCommandExecutor executor = new RemoveCommandExecutor();
+            ToDoTaskList taskList = GetPopulatedList();
+            Exception e = Assert.Throws<ArgumentException>(()=> executor.Execute(cmd,taskList));
+            Assert.Contains("Only one remove option",e.Message);
         }
     }
 }

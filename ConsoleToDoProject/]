@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -46,14 +46,14 @@ namespace ConsoleToDoProject.Models
             }
             else if (priorityOp.Value != "")
             {
-                if(Enum.IsDefined(typeof(ToDoTask.PriorityLevel), int.Parse(priorityOp.Value)))
+                if(Enum.IsDefined(typeof(ToDoTask.PriorityLevel), priorityOp.Value))
                 {
                     ToDoTask.PriorityLevel priority = (ToDoTask.PriorityLevel)Enum.Parse(typeof(ToDoTask.PriorityLevel),priorityOp.Value);
                     tList.DeleteTaskByPriority(priority);
                 }
                 else
                 {
-                    throw new ArgumentException($"Priority level {priorityOp.Value} not defined");
+                    throw new ArgumentException($"Priority level {} not defined")
                 }
 
             }else if(descriptionOp.Value != "")

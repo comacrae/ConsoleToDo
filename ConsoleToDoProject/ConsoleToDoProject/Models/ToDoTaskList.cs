@@ -101,7 +101,7 @@ namespace ConsoleToDoProject.Models
         {
             if (Tasks.Count == 0)
                 throw new InvalidOperationException("Tasks list is empty.");
-            else if (Tasks.FindAll(t => t.Priority == priority) == null)
+            else if (Tasks.Find(t => t.Priority == priority) == null)
             {
                 throw new InvalidOperationException($"Tasks list has no tasks with priority {(int)priority}.");
             }

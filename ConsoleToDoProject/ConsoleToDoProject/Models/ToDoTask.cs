@@ -8,7 +8,7 @@ namespace ConsoleToDoProject.Models
 {
     public class ToDoTask
     {
-        public enum PriorityLevel
+        public enum PriorityLevel:int
         {
             Low =3, Medium = 2, High = 1
         }

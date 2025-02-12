@@ -95,6 +95,18 @@ namespace ConsoleToDoProject.Models
             return;
         }
 
+        public void SetFlagOption(string name, bool flagValue, bool abbreviated)
+        {
+            int index = GetOptionIndex(name, abbreviated);
+            if (index == -1)
+            {
+                throw new Exception($"Option does not exist in supportedOptions: {name}");
+            }
+            supportedOptions[index].FlagActive = flagValue;
+            return;
+
+        }
+
         public bool OptionExists(string name, bool abbreviated = false)
         {
             return GetOption(name, abbreviated) != null;

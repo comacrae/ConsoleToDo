@@ -166,7 +166,7 @@ namespace ConsoleToDoProject.Tests
         {
             ToDoTaskList tasklist = new ToDoTaskList();
             tasklist.AddTask(new ToDoTask("a", ToDoTask.PriorityLevel.Medium));
-            tasklist.DeleteTaskByPriority(ToDoTask.PriorityLevel.Low);
+            Assert.Throws<InvalidOperationException>(() => tasklist.DeleteTaskByPriority(ToDoTask.PriorityLevel.Low));
             Assert.True(tasklist.Tasks.Any());
         }
 
