@@ -20,6 +20,7 @@ namespace ConsoleToDoProject.Models
             Option descriptionOp = cmd.Options.GetOption("description");
             Option completedOp = cmd.Options.GetOption("completed");
             Option removeAll = cmd.Options.GetOption("all");
+            Option indexOp = cmd.Options.GetOption("index");
 
             //make sure only one flag is active
             int activeFlags = 0;
@@ -30,6 +31,8 @@ namespace ConsoleToDoProject.Models
             if (priorityOp.Value != "")
                 activeFlags++;
             if (descriptionOp.Value != "")
+                activeFlags++;
+            if (indexOp.Value != "")
                 activeFlags++;
             if (activeFlags > 1)
                 throw new ArgumentException("Only one remove option can be used at once.");
@@ -59,6 +62,17 @@ namespace ConsoleToDoProject.Models
             }else if(descriptionOp.Value != "")
             {
                 tList.DeleteTaskByDescription(descriptionOp.Value ?? throw new ArgumentNullException("Remove Option description value is null"));
+            }
+            else if(indexOp.Value != "")
+            {
+                if(int.TryParse(indexOp.Value, out int result))
+                {
+                    tList.DeleteTaskByIndex(result);
+                }
+                else
+                {
+                    throw new ArgumentException($"Invalid index value {indexOp.Value}");
+                }
             }
             else
             {

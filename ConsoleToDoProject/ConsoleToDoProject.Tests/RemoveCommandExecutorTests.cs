@@ -94,5 +94,40 @@ namespace ConsoleToDoProject.Tests
             Exception e = Assert.Throws<ArgumentException>(()=> executor.Execute(cmd,taskList));
             Assert.Contains("Only one remove option",e.Message);
         }
+
+        [Fact]
+        public void Execute_ValidRemoveIndexOption_ClearsAppropriateTask()
+        {
+            Command cmd = _commandDefinitions.RemoveCommand();
+            cmd.Options.UpdateOption("i","0",true);
+            RemoveCommandExecutor executor = new RemoveCommandExecutor();
+            ToDoTaskList taskList = GetPopulatedList();
+            taskList = executor.Execute(cmd,taskList);
+            Assert.Null(taskList.Tasks.Find(t => t.Description == "task 1"));
+            Assert.True(taskList.Tasks.Count == 2);
+        }
+
+        [Fact]
+        public void Execute_InvalidIndexOption_ThrowsError()
+        {
+            Command cmd = _commandDefinitions.RemoveCommand();
+            cmd.Options.UpdateOption("i","x",true); // -i abbreviated index option
+            RemoveCommandExecutor executor = new RemoveCommandExecutor();
+            ToDoTaskList taskList = GetPopulatedList();
+            Exception e = Assert.Throws<ArgumentException>(()=> executor.Execute(cmd,taskList));
+            Assert.Contains("Invalid index value",e.Message);
+        }
+
+        [Fact]
+        public void Execute_OOBIndexOption_ThrowsError()
+        {
+            Command cmd = _commandDefinitions.RemoveCommand();
+            cmd.Options.UpdateOption("i","4",true); // -i index flag
+            RemoveCommandExecutor executor = new RemoveCommandExecutor();
+            ToDoTaskList taskList = GetPopulatedList();
+            Exception e = Assert.Throws<IndexOutOfRangeException>(()=> executor.Execute(cmd,taskList));
+            Assert.Contains("Index is out of bounds",e.Message);
+        }
+
     }
 }
