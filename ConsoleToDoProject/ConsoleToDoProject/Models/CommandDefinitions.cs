@@ -24,7 +24,7 @@ namespace ConsoleToDoProject.Models
         public Command UpdateCommand()
         {
             Option descriptionOp = new Option(abbreviatedName: "d", fullName: "description", description: "Description of task to update", defaultValue: "");
-            Option indexOp = new Option(abbreviatedName: "d", fullName: "description", description: "Description of task to update", defaultValue: "");
+            Option indexOp = new Option(abbreviatedName: "i", fullName: "index", description: "Index of task to update", defaultValue: "");
             Options ops = new Options() { descriptionOp, indexOp};
             return new Command("update", options: ops);
         }

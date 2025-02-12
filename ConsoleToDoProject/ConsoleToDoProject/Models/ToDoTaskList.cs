@@ -47,11 +47,17 @@ namespace ConsoleToDoProject.Models
 
         public void UpdateTaskByDescription(string description, string update)
         {
+            if (Tasks.Count == 0)
+                throw new InvalidOperationException("Tasks list is empty.");
             if(String.IsNullOrEmpty(update)) {
                 throw new ArgumentNullException("Update task string cannot be null or empty");
             }
             int taskIndex = GetTaskIndex(description);
-            if (GetTaskByDescription(update) == null)
+            if (taskIndex < 0)
+            {
+                throw new ArgumentException($"No task exists with description {description}");
+            }
+            if (Tasks.Find(t => t.Description == update) == null) // if no task exists with update string, add update string
                 Tasks[taskIndex].SetDescription(update);
             else
                 throw new ArgumentException("Cannot add duplicate task: ", update);
@@ -60,11 +66,13 @@ namespace ConsoleToDoProject.Models
 
         public void UpdateTaskByIndex(int index,string update)
         {
+            if (Tasks.Count == 0)
+                throw new InvalidOperationException("Tasks list is empty.");
             if (index < 0 || index > Tasks.Count - 1)
             {
                 throw new IndexOutOfRangeException("Index is out of bounds of task list");
             }
-            if (GetTaskByDescription(update) == null)
+            if (Tasks.Find(t => t.Description == update) == null) // if no task exists with update string, add update string
                 Tasks[index].SetDescription(update);
             else
                 throw new ArgumentException("Cannot add duplicate task: ", update);
