@@ -31,10 +31,17 @@ namespace ConsoleToDoProject.Models
 
         public Command SaveCommand()
         {
-            Option pathOp = new Option(abbreviatedName: "p", fullName: "path", description: "Savefile path", defaultValue: "");
+            Option pathOp = new Option(abbreviatedName: "p", fullName: "path", description: "Save file path", defaultValue: "");
             Option overwriteOp = new Option(abbreviatedName: "o", fullName: "overwrite", description: "Overwrite file flag", defaultValue:"false",isFlag:true);
             Options ops = new Options() { pathOp, overwriteOp};
             return new Command("save", options: ops);
+        }
+
+        public Command LoadCommand()
+        {
+            Option pathOp = new Option(abbreviatedName: "p", fullName: "path", description: "Load file path", defaultValue: "");
+            Options ops = new Options() { pathOp};
+            return new Command("load", options: ops);
         }
 
 

@@ -74,6 +74,8 @@ namespace ConsoleToDoProject.Services
         {
             if (filePath == null)
                 filePath = DefaultFilePath;
+            if (writeList.Tasks.Count == 0)
+                throw new ArgumentException("Cannot save empty task list");
 
             if (IsValidPath(filePath)) {
                 if(!overwrite && File.Exists(filePath))
