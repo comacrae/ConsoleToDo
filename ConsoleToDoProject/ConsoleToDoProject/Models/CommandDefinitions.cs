@@ -41,12 +41,25 @@ namespace ConsoleToDoProject.Models
         {
             Option pathOp = new Option(abbreviatedName: "p", fullName: "path", description: "Load file path", defaultValue: "");
             Options ops = new Options() { pathOp};
-            return new Command("load", options: ops);
+            return new Command("load", options: ops, noArgs:true);
+        }
+
+        public Command QuitCommand()
+        {
+            return new Command("quit", options: new Options(), noArgs:true);
+        }
+        public Command PrintCommand()
+        {
+            return new Command("print", options: new Options(), noArgs:true);
+        }
+        public Command HelpCommand()
+        {
+            return new Command("help", options: new Options(), noArgs:true);
         }
 
         public List<Command> GetCommandList()
         {
-            return new List<Command>() { AddCommand(),RemoveCommand(),UpdateCommand(),SaveCommand(),LoadCommand() };
+            return new List<Command>() { AddCommand(),RemoveCommand(),UpdateCommand(),SaveCommand(),LoadCommand(), QuitCommand(), HelpCommand(), PrintCommand() };
         }
 
 

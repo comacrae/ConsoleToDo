@@ -22,7 +22,7 @@ namespace ConsoleToDoProject.Services
 
         private bool ContainsInvalidChars(string input) {
 
-            string pattern = @"[^\w_\-]+";
+            string pattern = @"[^"":\w_\-\\\/\.]+";
 
             return Regex.IsMatch(input, pattern);
         }
@@ -36,15 +36,15 @@ namespace ConsoleToDoProject.Services
         {
             if (IsNullString(input))
             {
-                throw new ArgumentNullException($"{nameof(input)} is invalid: Value cannot be null.");
+                throw new ArgumentNullException($"input \"{input}\" is invalid: Value cannot be null.");
             }
 
             if (ContainsInvalidChars(input) )
             {
-                throw new ArgumentException($"{nameof(input)} is invalid: Value can only contain a-z, A-Z, and _ or - chars");
+                throw new ArgumentException($"input \"{input}\" is invalid: Value cannot be ., and _ or - chars");
             }else if (IsEmptyString(input))
             {
-                throw new ArgumentException($"{nameof(input)} is invalid: Value cannot be an empty string");
+                throw new ArgumentException($"input \"{input}\" is invalid: Value cannot be an empty string");
             }
             return true;
         }
