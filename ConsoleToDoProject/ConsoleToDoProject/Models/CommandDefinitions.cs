@@ -29,6 +29,14 @@ namespace ConsoleToDoProject.Models
             return new Command("update", options: ops);
         }
 
+        public Command SaveCommand()
+        {
+            Option pathOp = new Option(abbreviatedName: "p", fullName: "path", description: "Savefile path", defaultValue: "");
+            Option overwriteOp = new Option(abbreviatedName: "o", fullName: "overwrite", description: "Overwrite file flag", defaultValue:"false",isFlag:true);
+            Options ops = new Options() { pathOp, overwriteOp};
+            return new Command("save", options: ops);
+        }
+
 
 
     }
