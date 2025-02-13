@@ -1,36 +1,36 @@
+using System;
 using ConsoleToDoProject.Models;
-namespace ConsoleToDoProject.Models
+using ConsoleToDoProject.Interfaces;
+using ConsoleToDoProject.Services;
+namespace ConsoleToDoProject
 {
-    public class CommandDefinitions
+    internal class Program
     {
-        public Command AddCommand()
+        static void Main(string[] args)
         {
-            Option priorityOp = new Option(abbreviatedName: "p", fullName: "priority", description:"Task's priority level (1-3)", defaultValue: "1");
-            Options ops = new Options() { priorityOp};
-            return new Command("add", options: ops);
+            Commands commands = new Commands(initCommandsList:new CommandDefinitions().GetCommandList());
+            Parser p  = new Parser(initCommands:commands);
+            Dictionary<string, ICommandExecutor> executors = new Dictionary<string, ICommandExecutor>() ;
+            executors.Add("save", new SaveCommandExecutor());
+            executors.Add("load", new LoadCommandExecutor());
+            executors.Add("add", new AddCommandExecutor());
+            executors.Add("remove", new RemoveCommandExecutor());
+            executors.Add("update", new UpdateCommandExecutor());
+            SaveCommandExecutor save = new SaveCommandExecutor();
+            AddCommandExecutor add = new AddCommandExecutor();
+            RemoveCommandExecutor remove = new RemoveCommandExecutor();
+            UpdateCommandExecutor update = new UpdateCommandExecutor();
+            LoadCommandExecutor load = new LoadCommandExecutor();
+            TaskListFileHandler fileHandler = new TaskListFileHandler();
+            Command output = p.Parse(args);
+            try
+            {
+                if(output.Name == "save")
+                {
+                    
+                }
+            }
+
         }
-        public Command RemoveCommand()
-        {
-            Option descriptionOp = new Option(abbreviatedName: "d", fullName: "description", description:"Remove tasks matching given description", defaultValue: "");
-            Option indexOp = new Option(abbreviatedName: "i", fullName: "index", description:"Remove task matching given index", defaultValue: "");
-            Option priorityOp = new Option(abbreviatedName: "p", fullName: "priority", description:"Remove tasks with given priority level", defaultValue: "");
-            Option completedOp = new Option(abbreviatedName:"c", fullName: "completed",description:"Remove all completed tasks", isFlag: true, defaultValue:"false");
-            Option removeAllOp = new Option(abbreviatedName: "a", fullName: "all", description:"Remove all tasks", isFlag:true, defaultValue:"false");
-
-            Options ops = new Options() { descriptionOp,priorityOp, completedOp, removeAllOp, indexOp};
-            return new Command("remove", options: ops);
-        }
-
-        public Command UpdateCommand()
-        {
-            Option descriptionOp = new Option(abbreviatedName: "d", fullName: "description", description: "Description of task to update", defaultValue: "");
-            Option indexOp = new Option(abbreviatedName: "i", fullName: "index", description: "Index of task to update", defaultValue: "");
-            Option updateOp = new Option(abbreviatedName: "u", fullName: "update", description: "Index of task to update", defaultValue: "");
-            Options ops = new Options() { descriptionOp, indexOp};
-            return new Command("update", options: ops);
-        }
-
-
-
     }
 }

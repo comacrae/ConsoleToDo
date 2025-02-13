@@ -9,6 +9,5 @@ namespace ConsoleToDoProject.Interfaces
 {
     internal interface ICommandExecutor
     {
-        public void Execute(Command cmd);
     }
 }

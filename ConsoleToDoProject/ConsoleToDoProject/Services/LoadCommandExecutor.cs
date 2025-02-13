@@ -1,9 +1,10 @@
 ﻿using ConsoleToDoProject.Models;
+using ConsoleToDoProject.Interfaces;
 using System.IO;
 
 namespace ConsoleToDoProject.Services
 {
-    public class LoadCommandExecutor
+    public class LoadCommandExecutor:ICommandExecutor
     {
         public ToDoTaskList Execute(Command cmd, TaskListFileHandler fileHandler)
         {

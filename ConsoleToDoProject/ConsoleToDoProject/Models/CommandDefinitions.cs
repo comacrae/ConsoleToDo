@@ -18,7 +18,7 @@ namespace ConsoleToDoProject.Models
             Option removeAllOp = new Option(abbreviatedName: "a", fullName: "all", description:"Remove all tasks", isFlag:true, defaultValue:"false");
 
             Options ops = new Options() { descriptionOp,priorityOp, completedOp, removeAllOp, indexOp};
-            return new Command("remove", options: ops);
+            return new Command("remove", options: ops, noArgs:true);
         }
 
         public Command UpdateCommand()
@@ -34,7 +34,7 @@ namespace ConsoleToDoProject.Models
             Option pathOp = new Option(abbreviatedName: "p", fullName: "path", description: "Save file path", defaultValue: "");
             Option overwriteOp = new Option(abbreviatedName: "o", fullName: "overwrite", description: "Overwrite file flag", defaultValue:"false",isFlag:true);
             Options ops = new Options() { pathOp, overwriteOp};
-            return new Command("save", options: ops);
+            return new Command("save", options: ops, noArgs:true);
         }
 
         public Command LoadCommand()
@@ -42,6 +42,11 @@ namespace ConsoleToDoProject.Models
             Option pathOp = new Option(abbreviatedName: "p", fullName: "path", description: "Load file path", defaultValue: "");
             Options ops = new Options() { pathOp};
             return new Command("load", options: ops);
+        }
+
+        public List<Command> GetCommandList()
+        {
+            return new List<Command>() { AddCommand(),RemoveCommand(),UpdateCommand(),SaveCommand(),LoadCommand() };
         }
 
 

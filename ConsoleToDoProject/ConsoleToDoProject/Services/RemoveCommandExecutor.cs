@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ConsoleToDoProject.Models;
+using ConsoleToDoProject.Interfaces;
 
 namespace ConsoleToDoProject.Services
 {
-    public class RemoveCommandExecutor
+    public class RemoveCommandExecutor:ICommandExecutor
     {
         public ToDoTaskList Execute(Command cmd, ToDoTaskList tList)
         {
@@ -51,7 +52,8 @@ namespace ConsoleToDoProject.Services
             }
             else if (priorityOp.Value != "")
             {
-                if (Enum.IsDefined(typeof(ToDoTask.PriorityLevel), int.Parse(priorityOp.Value)))
+                int parsedVal = int.Parse(priorityOp.Value?? throw new ArgumentNullException("Priority given is null"));
+                if (Enum.IsDefined(typeof(ToDoTask.PriorityLevel), parsedVal))
                 {
                     ToDoTask.PriorityLevel priority = (ToDoTask.PriorityLevel)Enum.Parse(typeof(ToDoTask.PriorityLevel), priorityOp.Value);
                     tList.DeleteTaskByPriority(priority);

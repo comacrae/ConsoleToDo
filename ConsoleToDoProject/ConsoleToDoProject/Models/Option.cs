@@ -4,7 +4,7 @@ using System.Collections.Generic;
 public class Option
 {
     public string FullName { get;}
-    public string AbbreviatedName { get; } = null;
+    public string AbbreviatedName { get; }
     public string Description { get;}
     public string? DefaultValue { get;}
     public bool IsRequired { get;}

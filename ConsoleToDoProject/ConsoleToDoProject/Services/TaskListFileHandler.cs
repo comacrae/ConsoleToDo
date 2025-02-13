@@ -13,8 +13,10 @@ namespace ConsoleToDoProject.Services
 
         public TaskListFileHandler(string defaultFilePath= @"C:\Users\comac\source\repos\comacrae\ConsoleToDo\ConsoleToDoProject\ConsoleToDoProject.Tests\TestFolder\tasks.json")
         {
-            if(IsValidPath(defaultFilePath))
+            if (IsValidPath(defaultFilePath))
                 DefaultFilePath = defaultFilePath;
+            else
+                throw new ArgumentException("Default file path is invalid: ", defaultFilePath);
 
         }
 

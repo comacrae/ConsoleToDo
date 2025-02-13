@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ConsoleToDoProject.Services
 {
-    public class AddCommandExecutor
+    public class AddCommandExecutor:ICommandExecutor
     {
         public ToDoTaskList Execute(Command cmd, ToDoTaskList tList)
         {

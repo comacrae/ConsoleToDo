@@ -1,8 +1,9 @@
 ﻿using ConsoleToDoProject.Models;
+using ConsoleToDoProject.Interfaces;
 
 namespace ConsoleToDoProject.Services
 {
-    public class UpdateCommandExecutor
+    public class UpdateCommandExecutor:ICommandExecutor
     {
         public ToDoTaskList Execute(Command cmd, ToDoTaskList tList)
         {
