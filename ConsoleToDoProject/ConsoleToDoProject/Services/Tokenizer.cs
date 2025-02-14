@@ -7,40 +7,49 @@ namespace ConsoleToDoProject.Services
 
         private TokenValidator _validator = new TokenValidator();
         public string[] Tokenize(string input)
+
         {
             // Extract matches and handle quotes
-            string[] tokens = input.Split(' ');
+            string[] tokens = input.Trim().Split(' ');
             List<string> output = new List<string>();
 
             for(int i = 0; i < tokens.Length; i++)
             {
                 string token = tokens[i];
-                _validator.IsValidInput(token);
-
-                if (token.Contains('"'))
+                if (!String.IsNullOrEmpty(token))
                 {
-                    token = token.Trim('"') + " ";
-                    i++;
-                    bool foundMatch = false;
-                    while (!foundMatch && i < tokens.Length)
-                    {
-                        if (tokens[i].Contains('"'))
-                        {
-                            token += tokens[i].Trim('"');
-                            foundMatch = true;
-                        }
-                        else
-                        {
-                            token += tokens[i];
-                            token += " ";
-                            i++;
-                        }
+                    _validator.IsValidInput(token);
 
+                    int doubleQuoteCount = token.Count(ch => ch == '"');
+
+                    if (doubleQuoteCount == 1)
+                    {
+                        token = token.Trim('"') + " ";
+                        i++;
+                        bool foundMatch = false;
+                        while (!foundMatch && i < tokens.Length)
+                        {
+                            if (tokens[i].Contains('"'))
+                            {
+                                token += tokens[i].Trim('"');
+                                foundMatch = true;
+                            }
+                            else
+                            {
+                                token += tokens[i];
+                                token += " ";
+                                i++;
+                            }
+
+                        }
+                        if (!foundMatch)
+                            throw new ArgumentException("Unmatched double quotes");
+                    }else if (doubleQuoteCount == 2)
+                    {
+                        token = token.Trim('"');
                     }
-                    if (!foundMatch)
-                        throw new ArgumentException("Mismatched double quotes");
+                    output.Add(token);
                 }
-                output.Add(token);
             }
             return output.ToArray();
         }

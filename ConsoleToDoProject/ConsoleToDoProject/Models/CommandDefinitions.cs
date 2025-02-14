@@ -26,7 +26,16 @@ namespace ConsoleToDoProject.Models
             Option descriptionOp = new Option(abbreviatedName: "d", fullName: "description", description: "Description of task to update", defaultValue: "");
             Option indexOp = new Option(abbreviatedName: "i", fullName: "index", description: "Index of task to update", defaultValue: "");
             Options ops = new Options() { descriptionOp, indexOp};
-            return new Command("update", options: ops);
+            return new Command("update", options: ops) ;
+        }
+
+        public Command CompleteCommand()
+        {
+            Option indexOp = new Option(abbreviatedName: "i", fullName: "index", description: "Index of task to mark complete", defaultValue: "");
+            Option descriptionOp = new Option(abbreviatedName: "d", fullName: "description", description: "Description of task to mark complete", defaultValue: "");
+            Options ops = new Options() { indexOp, descriptionOp};
+            return new Command("complete", options: ops, noArgs:true) ;
+
         }
 
         public Command SaveCommand()
@@ -59,7 +68,7 @@ namespace ConsoleToDoProject.Models
 
         public List<Command> GetCommandList()
         {
-            return new List<Command>() { AddCommand(),RemoveCommand(),UpdateCommand(),SaveCommand(),LoadCommand(), QuitCommand(), HelpCommand(), PrintCommand() };
+            return new List<Command>() { AddCommand(),RemoveCommand(),UpdateCommand(),SaveCommand(),LoadCommand(), QuitCommand(), HelpCommand(), PrintCommand(), CompleteCommand() };
         }
 
 

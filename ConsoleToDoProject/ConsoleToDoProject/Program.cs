@@ -20,6 +20,7 @@ namespace ConsoleToDoProject
             LoadCommandExecutor load = new LoadCommandExecutor();
             PrintCommandExecutor print = new PrintCommandExecutor();
             HelpCommandExecutor help = new HelpCommandExecutor();
+            CompleteCommandExecutor complete = new CompleteCommandExecutor();
 
             ToDoTaskList? tList = new ToDoTaskList();
             bool quit = false;
@@ -51,6 +52,9 @@ namespace ConsoleToDoProject
                     else if (parsedCmd.Name == "remove")
                     {
                         tList = remove.Execute(parsedCmd, tList);
+                    }else if(parsedCmd.Name == "complete")
+                    {
+                        tList = complete.Execute(parsedCmd, tList);
                     }
                     else if(parsedCmd.Name == "print"){
                         print.Execute(tList);
